@@ -21,3 +21,8 @@ on windows:
 3. install the dependencies:
 
 `pip install -r requirements.txt`
+
+
+4. Start the app
+
+`flask run`
