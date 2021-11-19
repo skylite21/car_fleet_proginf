@@ -22,7 +22,10 @@ on windows:
 
 `pip install -r requirements.txt`
 
+4. Create the environment file, and fill out the variables
 
-4. Start the app
+`cp .flaskenv-example .flaskenv`
+
+5. Start the app
 
 `flask run`

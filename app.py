@@ -1,10 +1,11 @@
-from resources.user import UserRegister
 from flask import Flask
 from flask_restful import Api
-from os import environ
 from flask_jwt import JWT
+from os import environ
+
 from resources.car import Car, CarList
 from resources.driver import Driver
+from resources.user import UserRegister
 from security import authenticate, identity
 from resources.assign import AssignDriverToCar
 from db import db
@@ -12,20 +13,22 @@ from db import db
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = '302hfjoDSKLOJ'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = environ.get(
+    'SQLALCHEMY_TRACK_MODIFICATIONS')
+app.secret_key = environ.get('SECRET_KEY')
 
 api = Api(app)
 # ezzel kötjük össze az sqlalchemy-t a flask-al:
 db.init_app(app)
 
+jwt = JWT(app, authenticate, identity)
+
 
 @app.before_first_request
 def create_tables():
+  # az adatbázis file-t hozza létre, és benne a táblákat (üresen)
   db.create_all()
 
-
-jwt = JWT(app, authenticate, identity)
 
 api.add_resource(CarList, '/cars')
 api.add_resource(Car, '/car/<string:plate>')
