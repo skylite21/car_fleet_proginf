@@ -17,6 +17,4 @@ class Driver(Resource):
     return {"message": "Driver created successfully."}, 201
 
   def get(self):
-    data = DriverModel.query.filter_by()
-    print(data)
     return {"drivers": [driver.json() for driver in DriverModel.query.all()]}

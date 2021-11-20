@@ -38,7 +38,6 @@ class AssignDriverToCar(Resource):
 
     if car.driver_id is not None:
       return {"message": f"This car is already assigned to a driver"}, 405
-
     else:
       car.driver_id = driver.id
       driver.car_id = car.id
